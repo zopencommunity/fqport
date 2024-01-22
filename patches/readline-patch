@@ -1,0 +1,10 @@
+diff --git a/internal/platform/utils_unix.go b/internal/platform/utils_unix.go
+index fdbbb62..1e0795d 100644
+--- a/internal/platform/utils_unix.go
++++ b/internal/platform/utils_unix.go
+@@ -1,4 +1,4 @@
+-//go:build aix || darwin || dragonfly || freebsd || (linux && !appengine) || netbsd || openbsd || os400 || solaris
++//go:build aix || darwin || dragonfly || freebsd || (linux && !appengine) || netbsd || openbsd || os400 || solaris || zos
+ 
+ package platform
+ 
