@@ -54,5 +54,5 @@ zopen_clean()
 
 zopen_get_version()
 {
-  echo "1.0.0"
+  $ZOPEN_INSTALL_DIR/bin/fq --version | awk '{ print $1 }'
 }
