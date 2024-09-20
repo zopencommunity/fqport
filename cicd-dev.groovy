@@ -6,9 +6,9 @@ node('linux')
       branches: [[name: '*/main']],
       doGenerateSubmoduleConfigurations: false,
       extensions: [],
-      userRemoteConfigs: [[url: 'https://github.com/ZOSOpenTools/fqport.git']]])
+      userRemoteConfigs: [[url: 'https://github.com/zopencommunity/fqport.git']]])
   }
   stage('Build') {
-    build job: 'Port-Pipeline', parameters: [string(name: 'PORT_GITHUB_REPO', value: 'https://github.com/ZOSOpenTools/fqport.git'), string(name: 'PORT_DESCRIPTION', value: 'https://github.com/wader/fq.git' ), string(name: 'BUILD_LINE', value: 'DEV') ]
+    build job: 'Port-Pipeline', parameters: [string(name: 'PORT_GITHUB_REPO', value: 'https://github.com/zopencommunity/fqport.git'), string(name: 'PORT_DESCRIPTION', value: 'https://github.com/wader/fq.git' ), string(name: 'BUILD_LINE', value: 'DEV') ]
   }
 }
