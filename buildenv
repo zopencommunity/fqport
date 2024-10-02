@@ -1,6 +1,6 @@
 # Update bump details accordingly. Use bump check to confirm.
 # bump: fq-version /FQ_VERSION="(.*)"/ https://github.com/wader/fq.git|semver:*
-# FQ_VERSION="0.10.0" # Specify a stable release
+# FQ_VERSION="0.13.0" # Specify a stable release
 # export ZOPEN_STABLE_TAG="v${FQ_VERSION}"
 export ZOPEN_STABLE_URL="https://github.com/wader/fq.git"
 export ZOPEN_STABLE_DEPS="coreutils wharf"
