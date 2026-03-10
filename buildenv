@@ -3,7 +3,7 @@
 FQ_VERSION="0.16.0" # Specify a stable release
 export ZOPEN_STABLE_TAG="v${FQ_VERSION}"
 export ZOPEN_STABLE_URL="https://github.com/wader/fq.git"
-export ZOPEN_STABLE_DEPS="coreutils wharf"
+export ZOPEN_STABLE_DEPS="coreutils wharf make"
 export ZOPEN_DEV_URL="https://github.com/wader/fq.git"
 export ZOPEN_DEV_DEPS="coreutils wharf"
 export ZOPEN_BUILD_LINE="STABLE"
@@ -17,7 +17,8 @@ export ZOPEN_MAKE="go"
 export ZOPEN_MAKE_OPTS="build"
 export ZOPEN_MAKE_MINIMAL=1
 export ZOPEN_INSTALL="zopen_install"
-export ZOPEN_CHECK="skip"
+export ZOPEN_CHECK_OPTS="test fq"
+export ZOPEN_CHECK_MINIMAL=1
 export ZOPEN_CLEAN="zopen_clean"
 
 zopen_init()
@@ -32,14 +33,29 @@ zopen_init()
 zopen_wharf()
 {
   cd ..
-  
-  if [ ! -f go.work ]; then
-    go work init ./fq
-  else
-    go work use ./fq
-  fi
+  # Always start with a fresh go.work to avoid stale entries
+  rm -f go.work
+  go work init ./fq
   wharf ./fq/
   cd ./fq
+}
+
+zopen_check_results()
+{
+  chk="$1/$2_check.log"
+  successes=$(egrep "^ok " "${chk}" | wc -l | xargs)
+
+  failuretests=$(egrep "^not ok " "${chk}")
+  failures=$(echo "${failuretests}" | wc -l | xargs)
+  totalTests=$((failures+successes))
+
+  echo "${failuretests}" >"$1/$2_check_failures.log"
+
+cat <<ZZ
+actualFailures:$failures
+totalTests:$totalTests
+expectedFailures:3
+ZZ
 }
 
 zopen_install()
@@ -49,7 +65,7 @@ zopen_install()
 
 zopen_clean()
 {
-  rm -rf ../.wharf_cache ../go.work* ../wharf_port ../readline
+  rm -rf ../.wharf_cache ../go.work* ../wharf_port
 }
 
 zopen_get_version()
